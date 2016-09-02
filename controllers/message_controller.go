@@ -8,63 +8,63 @@ import (
 	"github.com/cosminrentea/franz/models"
 )
 
-type TaskController struct {
+type MessageController struct {
 	beego.Controller
 }
 
 // Example:
 //
-//   req: GET /task/
-//   res: 200 {"Tasks": [
+//   req: GET /message/
+//   res: 200 {"Messages": [
 //          {"ID": 1, "Title": "Learn Go", "Done": false},
 //          {"ID": 2, "Title": "Buy bread", "Done": true}
 //        ]}
-func (this *TaskController) ListTasks() {
-	res := struct{ Tasks []*models.Task }{models.DefaultTaskList.All()}
+func (this *MessageController) ListMessages() {
+	res := struct{ Messages []*models.Message }{models.DefaultMessageList.All()}
 	this.Data["json"] = res
 	this.ServeJSON()
 }
 
 // Examples:
 //
-//   req: POST /task/ {"Title": ""}
+//   req: POST /message/ {"Title": ""}
 //   res: 400 empty title
 //
-//   req: POST /task/ {"Title": "Buy bread"}
+//   req: POST /message/ {"Title": "Buy bread"}
 //   res: 200
-func (this *TaskController) NewTask() {
+func (this *MessageController) NewMessage() {
 	req := struct{ Title string }{}
 	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &req); err != nil {
 		this.Ctx.Output.SetStatus(400)
 		this.Ctx.Output.Body([]byte("empty title"))
 		return
 	}
-	t, err := models.NewTask(req.Title)
+	t, err := models.NewMessage(req.Title)
 	if err != nil {
 		this.Ctx.Output.SetStatus(400)
 		this.Ctx.Output.Body([]byte(err.Error()))
 		return
 	}
-	models.DefaultTaskList.Save(t)
-	models.DefaultTaskList.Send(t)
+	models.DefaultMessageList.Save(t)
+	models.DefaultMessageList.Send(t)
 }
 
 // Examples:
 //
-//   req: GET /task/1
+//   req: GET /message/1
 //   res: 200 {"ID": 1, "Title": "Buy bread", "Done": true}
 //
-//   req: GET /task/42
-//   res: 404 task not found
-func (this *TaskController) GetTask() {
+//   req: GET /message/42
+//   res: 404 message not found
+func (this *MessageController) GetMessage() {
 	id := this.Ctx.Input.Param(":id")
-	beego.Info("Task is ", id)
+	beego.Info("Message is ", id)
 	intid, _ := strconv.ParseInt(id, 10, 64)
-	t, ok := models.DefaultTaskList.Find(intid)
+	t, ok := models.DefaultMessageList.Find(intid)
 	beego.Info("Found", ok)
 	if !ok {
 		this.Ctx.Output.SetStatus(404)
-		this.Ctx.Output.Body([]byte("task not found"))
+		this.Ctx.Output.Body([]byte("message not found"))
 		return
 	}
 	this.Data["json"] = t
@@ -73,16 +73,16 @@ func (this *TaskController) GetTask() {
 
 // Example:
 //
-//   req: PUT /task/1 {"ID": 1, "Title": "Learn Go", "Done": true}
+//   req: PUT /message/1 {"ID": 1, "Title": "Learn Go", "Done": true}
 //   res: 200
 //
-//   req: PUT /task/2 {"ID": 2, "Title": "Learn Go", "Done": true}
-//   res: 400 inconsistent task IDs
-func (this *TaskController) UpdateTask() {
+//   req: PUT /message/2 {"ID": 2, "Title": "Learn Go", "Done": true}
+//   res: 400 inconsistent message IDs
+func (this *MessageController) UpdateMessage() {
 	id := this.Ctx.Input.Param(":id")
-	beego.Info("Task is ", id)
+	beego.Info("Message is ", id)
 	intid, _ := strconv.ParseInt(id, 10, 64)
-	var t models.Task
+	var t models.Message
 	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &t); err != nil {
 		this.Ctx.Output.SetStatus(400)
 		this.Ctx.Output.Body([]byte(err.Error()))
@@ -90,13 +90,13 @@ func (this *TaskController) UpdateTask() {
 	}
 	if t.ID != intid {
 		this.Ctx.Output.SetStatus(400)
-		this.Ctx.Output.Body([]byte("inconsistent task IDs"))
+		this.Ctx.Output.Body([]byte("inconsistent message IDs"))
 		return
 	}
-	if _, ok := models.DefaultTaskList.Find(intid); !ok {
+	if _, ok := models.DefaultMessageList.Find(intid); !ok {
 		this.Ctx.Output.SetStatus(400)
-		this.Ctx.Output.Body([]byte("task not found"))
+		this.Ctx.Output.Body([]byte("message not found"))
 		return
 	}
-	models.DefaultTaskList.Save(&t)
+	models.DefaultMessageList.Save(&t)
 }

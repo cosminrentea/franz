@@ -7,7 +7,7 @@ import (
 
 func main() {
 	beego.Router("/", &controllers.MainController{})
-	beego.Router("/task/", &controllers.TaskController{}, "get:ListTasks;post:NewTask")
-	beego.Router("/task/:id:int", &controllers.TaskController{}, "get:GetTask;put:UpdateTask")
+	beego.Router("/message/", &controllers.MessageController{}, "get:ListMessages;post:NewMessage")
+	beego.Router("/message/:id:int", &controllers.MessageController{}, "get:GetMessage;put:UpdateMessage")
 	beego.Run()
 }

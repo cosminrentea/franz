@@ -28,8 +28,8 @@
                 <label for="message" ng-show="todoText.length">{{ todoText.length }} / {{ maximumLength }}</label>
             </form>
             <img class="spinner" src="/static/img/spinner.gif" alt="Loading" ng-class="{working: working}"/>
-            <ul class="lightestgrey rounded-box" ng-show="tasks.length">
-                <li ng-repeat="t in tasks" ng-class="{done: t.Done}" ng-click="toggleDone(t)">
+            <ul class="lightestgrey rounded-box" ng-show="messages.length">
+                <li ng-repeat="t in messages" ng-class="{done: t.Done}" ng-click="toggleDone(t)">
                     <span class="checkbox"></span>{{ t.Title }}
                 </li>
             </ul>
