@@ -63,6 +63,7 @@ label {
 li {
     list-style: none;
     padding: 5px;
+    word-wrap: break-word;
 }
 
 li.done {
@@ -110,5 +111,5 @@ li.done > .checkbox {
 .validation-error {
     display: block;
     text-align: center;
-    color: red;
+    color: #cc071e;
 }
