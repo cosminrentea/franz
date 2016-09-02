@@ -19,7 +19,8 @@ body, textarea, button {
 }
 
 *:disabled {
-    color: #888;
+    color: #aaaaaa;
+    text-decoration: line-through;
 }
 
 h1 {
@@ -49,10 +50,9 @@ textarea {
 
 button {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1em;
+    margin: 1em auto;
     width: 8em;
+    color: black;
 }
 
 label {
