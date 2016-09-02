@@ -12,11 +12,14 @@
 function FranzCtrl($scope, $http) {
     $scope.tasks = [];
     $scope.working = false;
+    $scope.errorSending = false;
     $scope.maximumLength = 400;
 
     var logError = function (data, status) {
         console.log('code ' + status + ': ' + data);
+        $scope.errorSending = true;
         $scope.working = false;
+        $scope.date = new Date();
     };
 
     var refresh = function () {
@@ -32,6 +35,7 @@ function FranzCtrl($scope, $http) {
                 .error(logError)
                 .success(function () {
                     refresh().then(function () {
+                        $scope.errorSending = false;
                         $scope.working = false;
                         $scope.todoText = '';
                     })
