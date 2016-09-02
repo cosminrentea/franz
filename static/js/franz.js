@@ -4,7 +4,7 @@
  license that can be found in the LICENSE file.
  */
 
-(function(angular) {
+(function (angular) {
     'use strict';
     angular.module('franz', ['ngMessages']);
 })(window.angular);
@@ -25,7 +25,7 @@ function FranzCtrl($scope, $http) {
         }).error(logError);
     };
 
-    $scope.addTodo = function () {
+    $scope.sendMessage = function () {
         $scope.working = true;
         if (confirm('Do you really want to send this message?')) {
             $http.post('/task/', {Title: $scope.todoText})

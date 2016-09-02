@@ -15,7 +15,7 @@
         <div class="container" ng-controller="FranzCtrl">
             <h2>Write your message and <span>&nbsp;Franz&nbsp;</span> will send it</h2>
 
-            <form name="messageform" ng-submit="addTodo()">
+            <form name="messageform" ng-submit="sendMessage()">
                 <textarea name="message" id="message" class="rounded-box" autofocus cols="80" rows="5" ng-model="todoText" ng-required="true" ng-minlength="5" ng-maxlength="{{ maximumLength }}"></textarea>
                 <button type="submit" class="grey rounded-box" ng-disabled="working || messageform.$invalid">Send</button>
                 <label for="message" ng-show="todoText.length">{{ todoText.length }} / {{ maximumLength }}</label>
