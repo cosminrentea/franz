@@ -45,8 +45,13 @@ func (this *MessageController) NewMessage() {
 		this.Ctx.Output.Body([]byte(err.Error()))
 		return
 	}
+	err = models.DefaultMessageList.Send(t)
+	if err != nil {
+		this.Ctx.Output.SetStatus(400)
+		this.Ctx.Output.Body([]byte(err.Error()))
+		return
+	}
 	models.DefaultMessageList.Save(t)
-	models.DefaultMessageList.Send(t)
 }
 
 // Examples:
