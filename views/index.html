@@ -20,7 +20,9 @@
                 <button type="submit" class="grey rounded-box" ng-disabled="working || messageform.$invalid">Send</button>
                 <label for="message" ng-show="todoText.length">{{ todoText.length }} / {{ maximumLength }}</label>
                 <div role="alert" ng-messages="messageform.message.$error">
+                    <!--
                     <div class="validation-error" ng-message="required">You did not enter a message</div>
+                    -->
                     <div class="validation-error" ng-message="minlength">Your message is too short</div>
                     <div class="validation-error" ng-message="maxlength">Your message is too long</div>
                 </div>
