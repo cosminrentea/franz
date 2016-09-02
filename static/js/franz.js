@@ -10,7 +10,7 @@
 })(window.angular);
 
 function FranzCtrl($scope, $http) {
-    $scope.tasks = [];
+    $scope.messages = [];
     $scope.working = false;
     $scope.errorSending = false;
     $scope.maximumLength = 400;
@@ -23,15 +23,17 @@ function FranzCtrl($scope, $http) {
     };
 
     var refresh = function () {
-        return $http.get('/task/').success(function (data) {
-            $scope.tasks = data.Tasks;
-        }).error(handleError);
+        return $http.get('/message/')
+            .error(handleError)
+            .success(function (data) {
+                $scope.messages = data.Messages;
+            });
     };
 
     $scope.sendMessage = function () {
         $scope.working = true;
         if (confirm('Do you really want to send this message?')) {
-            $http.post('/task/', {Title: $scope.todoText})
+            $http.post('/message/', {Title: $scope.todoText})
                 .error(handleError)
                 .success(function () {
                     refresh().then(function () {
@@ -45,12 +47,12 @@ function FranzCtrl($scope, $http) {
         }
     };
 
-    $scope.toggleDone = function (task) {
-        data = {ID: task.ID, Title: task.Title, Done: !task.Done}
-        $http.put('/task/' + task.ID, data)
+    $scope.toggleDone = function (message) {
+        data = {ID: message.ID, Title: message.Title, Done: !message.Done}
+        $http.put('/message/' + message.ID, data)
             .error(handleError)
             .success(function () {
-                task.Done = !task.Done
+                message.Done = !message.Done
             });
     };
 
