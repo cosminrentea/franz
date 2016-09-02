@@ -4,9 +4,15 @@
  license that can be found in the LICENSE file.
  */
 
-function TaskCtrl($scope, $http) {
+(function(angular) {
+    'use strict';
+    angular.module('franz', ['ngMessages']);
+})(window.angular);
+
+function FranzCtrl($scope, $http) {
     $scope.tasks = [];
     $scope.working = false;
+    $scope.maximumLength = 400;
 
     var logError = function (data, status) {
         console.log('code ' + status + ': ' + data);
