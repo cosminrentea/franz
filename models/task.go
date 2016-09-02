@@ -2,9 +2,14 @@ package models
 
 import (
 	"fmt"
+	"github.com/Shopify/sarama"
 )
 
-var DefaultTaskList *TaskManager
+var (
+	DefaultTaskList *TaskManager
+	kafkaTopic      = "franz"
+	kafkaBroker     = "localhost:9092"
+)
 
 type Task struct {
 	ID    int64  // Unique identifier
@@ -69,6 +74,27 @@ func (m *TaskManager) Find(ID int64) (*Task, bool) {
 		}
 	}
 	return nil, false
+}
+
+func (m *TaskManager) Send(task *Task) error {
+	kafkaMessage := &sarama.ProducerMessage{
+		Topic: kafkaTopic,
+		Key:   nil,
+		Value: sarama.StringEncoder(task.Title),
+	}
+
+	kafkaProducer, err := sarama.NewSyncProducer([]string{kafkaBroker}, nil)
+	if err != nil {
+		//TODO Cosmin
+	}
+	defer func() {
+		if errClose := kafkaProducer.Close(); errClose != nil {
+			//TODO Cosmin
+		}
+	}()
+
+	_, _, errSend := kafkaProducer.SendMessage(kafkaMessage)
+	return errSend
 }
 
 func init() {
