@@ -33,13 +33,13 @@ function FranzCtrl($scope, $http) {
     $scope.sendMessage = function () {
         $scope.working = true;
         if (confirm('Do you really want to send this message?')) {
-            $http.post('/message/', {Title: $scope.todoText})
+            $http.post('/message/', {Title: $scope.messageText})
                 .error(handleError)
                 .success(function () {
                     refresh().then(function () {
                         $scope.errorSending = false;
                         $scope.working = false;
-                        $scope.todoText = '';
+                        $scope.messageText = '';
                     })
                 });
         } else {

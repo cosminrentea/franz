@@ -13,7 +13,7 @@
         <h2>Write your message and <span>&nbsp;Franz&nbsp;</span> will send it</h2>
         <div class="container" ng-controller="FranzCtrl">
             <form name="messageform" ng-submit="sendMessage()">
-                <textarea name="message" id="message" class="rounded-box" autofocus cols="80" rows="5" ng-model="todoText" ng-required="true" ng-minlength="5" ng-maxlength="{{ maximumLength }}"></textarea>
+                <textarea name="message" id="message" class="rounded-box" autofocus cols="80" rows="5" ng-model="messageText" ng-required="true" ng-minlength="5" ng-maxlength="{{ maximumLength }}"></textarea>
                 <button type="submit" class="lightgrey rounded-box" ng-disabled="working || messageform.$invalid">Send</button>
                 <div role="alert" ng-messages="messageform.message.$error">
                     <!--
@@ -25,7 +25,7 @@
                 <div class="validation-error" role="alert" ng-show="errorSending">
                     [{{ date | date:'dd-MM-yyyy , hh:mm:ss' }}] Your message could not be sent!
                 </div>
-                <label for="message" ng-show="todoText.length">{{ todoText.length }} / {{ maximumLength }}</label>
+                <label for="message" ng-show="messageText.length">{{ messageText.length }} / {{ maximumLength }}</label>
             </form>
             <img class="spinner" src="/static/img/spinner.gif" alt="Loading" ng-class="{working: working}"/>
             <ul class="lightestgrey rounded-box" ng-show="messages.length">
