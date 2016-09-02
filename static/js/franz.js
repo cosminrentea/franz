@@ -15,7 +15,7 @@ function FranzCtrl($scope, $http) {
     $scope.errorSending = false;
     $scope.maximumLength = 400;
 
-    var logError = function (data, status) {
+    var handleError = function (data, status) {
         console.log('code ' + status + ': ' + data);
         $scope.errorSending = true;
         $scope.working = false;
@@ -25,14 +25,14 @@ function FranzCtrl($scope, $http) {
     var refresh = function () {
         return $http.get('/task/').success(function (data) {
             $scope.tasks = data.Tasks;
-        }).error(logError);
+        }).error(handleError);
     };
 
     $scope.sendMessage = function () {
         $scope.working = true;
         if (confirm('Do you really want to send this message?')) {
             $http.post('/task/', {Title: $scope.todoText})
-                .error(logError)
+                .error(handleError)
                 .success(function () {
                     refresh().then(function () {
                         $scope.errorSending = false;
@@ -47,9 +47,11 @@ function FranzCtrl($scope, $http) {
 
     $scope.toggleDone = function (task) {
         data = {ID: task.ID, Title: task.Title, Done: !task.Done}
-        $http.put('/task/' + task.ID, data).error(logError).success(function () {
-            task.Done = !task.Done
-        });
+        $http.put('/task/' + task.ID, data)
+            .error(handleError)
+            .success(function () {
+                task.Done = !task.Done
+            });
     };
 
     refresh().then(function () {

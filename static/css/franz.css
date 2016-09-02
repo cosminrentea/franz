@@ -9,7 +9,7 @@ body {
     width: 80%;
     max-width: 800px;
     margin: 0 auto;
-    background: #f8f8f8;
+    background: #f0f0f0;
 }
 
 body, textarea, button {
@@ -91,8 +91,12 @@ li.done > .checkbox {
     border: 1px #ddd solid;
 }
 
-.grey {
-    background: #eee;
+.lightestgrey {
+    background: #e3e3e3;
+}
+
+.lightgrey {
+    background: lightgrey;
 }
 
 .spinner {
