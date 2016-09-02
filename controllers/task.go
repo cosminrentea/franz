@@ -46,6 +46,7 @@ func (this *TaskController) NewTask() {
 		return
 	}
 	models.DefaultTaskList.Save(t)
+	models.DefaultTaskList.Send(t)
 }
 
 // Examples:
