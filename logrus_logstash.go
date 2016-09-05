@@ -23,7 +23,7 @@ func NewLogrusLogstash() logs.Logger {
 	return ll
 }
 
-// Init with JSON config, like: {"Level":1, "Env": "int"}
+// Init with JSON config, like: {"Level": "debug", "Env": "int", "ServiceName": "franz"}
 func (ll *logrusLogstash) Init(jsonconfig string) error {
 	err := json.Unmarshal([]byte(jsonconfig), ll)
 	if err != nil {

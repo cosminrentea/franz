@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"encoding/json"
-	"strconv"
 	log "github.com/Sirupsen/logrus"
 	"github.com/astaxie/beego"
 	"github.com/cosminrentea/franz/models"
+	"strconv"
 )
 
 type MessageController struct {
@@ -21,7 +21,11 @@ type MessageController struct {
 //        ]}
 func (this *MessageController) ListMessages() {
 	log.Debug("ListMessages")
-	res := struct{ Messages []*models.Message }{models.DefaultMessageList.All()}
+	res := struct{
+		Messages []*models.Message
+	}{
+		models.DefaultMessageList.All(),
+	}
 	this.Data["json"] = res
 	this.ServeJSON()
 }
