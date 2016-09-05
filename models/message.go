@@ -83,7 +83,6 @@ func (m *MessageManager) Send(message *Message) error {
 		Key:   nil,
 		Value: sarama.StringEncoder(message.Title),
 	}
-
 	kafkaProducer, err := sarama.NewSyncProducer([]string{kafkaBroker}, nil)
 	if err != nil {
 		beego.Error("error when creating Kafka SyncProducer", err)
@@ -93,7 +92,6 @@ func (m *MessageManager) Send(message *Message) error {
 			beego.Error("error when closing Kafka SyncProducer", errClose)
 		}
 	}()
-
 	_, _, errSend := kafkaProducer.SendMessage(kafkaMessage)
 	return errSend
 }

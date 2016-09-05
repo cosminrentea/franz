@@ -30,7 +30,7 @@ func (this *MessageController) ListMessages() {
 //   req: POST /message/ {"Title": ""}
 //   res: 400 empty title
 //
-//   req: POST /message/ {"Title": "Buy bread"}
+//   req: POST /message/ {"Title": "Buy bread from us now!"}
 //   res: 200
 func (this *MessageController) NewMessage() {
 	req := struct{ Title string }{}
