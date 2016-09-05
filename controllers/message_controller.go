@@ -41,25 +41,25 @@ func (this *MessageController) NewMessage() {
 	log.Debug("NewMessage")
 	req := struct{ Title string }{}
 	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &req); err != nil {
-		this.outputError(400, "empty")
+		this.output(400, "empty")
 		return
 	}
 	t, err := models.NewMessage(req.Title)
 	if err != nil {
-		this.outputError(400, err.Error())
+		this.output(400, err.Error())
 		return
 	}
 	log.Debug("NewMessage send")
 	err = models.DefaultMessageList.Send(t)
 	if err != nil {
-		this.outputError(400, err.Error())
+		this.output(400, err.Error())
 		return
 	}
 	log.Debug("NewMessage save")
 	models.DefaultMessageList.Save(t)
 }
 
-func (this *MessageController) outputError(status int, msg string) {
+func (this *MessageController) output(status int, msg string) {
 	this.Ctx.Output.SetStatus(status)
 	this.Ctx.Output.Body([]byte(msg))
 }
