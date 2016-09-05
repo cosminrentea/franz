@@ -29,9 +29,7 @@
             </form>
             <img class="spinner" src="/static/img/spinner.gif" alt="Loading" ng-class="{working: working}"/>
             <ul class="lightestgrey rounded-box" ng-show="messages.length">
-                <li ng-repeat="t in messages" ng-class="{done: t.Done}" ng-click="toggleDone(t)">
-                    <span class="checkbox"></span>{{ t.Title }}
-                </li>
+                <li ng-repeat="t in messages" ng-class="{done: t.Done}">{{ t.Title }}</li>
             </ul>
         </div>
     </body>
