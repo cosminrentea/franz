@@ -35,23 +35,25 @@ func (this *MessageController) ListMessages() {
 func (this *MessageController) NewMessage() {
 	req := struct{ Title string }{}
 	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &req); err != nil {
-		this.Ctx.Output.SetStatus(400)
-		this.Ctx.Output.Body([]byte("empty title"))
+		this.outputError(400, "empty title")
 		return
 	}
 	t, err := models.NewMessage(req.Title)
 	if err != nil {
-		this.Ctx.Output.SetStatus(400)
-		this.Ctx.Output.Body([]byte(err.Error()))
+		this.outputError(400, err.Error())
 		return
 	}
 	err = models.DefaultMessageList.Send(t)
 	if err != nil {
-		this.Ctx.Output.SetStatus(400)
-		this.Ctx.Output.Body([]byte(err.Error()))
+		this.outputError(400, err.Error())
 		return
 	}
 	models.DefaultMessageList.Save(t)
+}
+
+func (this *MessageController) outputError(status int, msg string) {
+	this.Ctx.Output.SetStatus(status)
+	this.Ctx.Output.Body([]byte(msg))
 }
 
 // Examples:
