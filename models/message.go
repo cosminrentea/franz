@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/Shopify/sarama"
+	"github.com/astaxie/beego"
 )
 
 var (
@@ -85,11 +86,11 @@ func (m *MessageManager) Send(message *Message) error {
 
 	kafkaProducer, err := sarama.NewSyncProducer([]string{kafkaBroker}, nil)
 	if err != nil {
-		//TODO Cosmin
+		beego.Error("error when creating Kafka SyncProducer", err)
 	}
 	defer func() {
 		if errClose := kafkaProducer.Close(); errClose != nil {
-			//TODO Cosmin
+			beego.Error("error when closing Kafka SyncProducer", errClose)
 		}
 	}()
 
