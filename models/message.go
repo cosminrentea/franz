@@ -86,6 +86,7 @@ func (m *MessageManager) Send(message *Message) error {
 	kafkaProducer, err := sarama.NewSyncProducer([]string{kafkaBroker}, nil)
 	if err != nil {
 		beego.Error("error when creating Kafka SyncProducer", err)
+		return err
 	}
 	defer func() {
 		if errClose := kafkaProducer.Close(); errClose != nil {

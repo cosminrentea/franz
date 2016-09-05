@@ -3,7 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"strconv"
-
+	log "github.com/Sirupsen/logrus"
 	"github.com/astaxie/beego"
 	"github.com/cosminrentea/franz/models"
 )
@@ -20,6 +20,7 @@ type MessageController struct {
 //          {"ID": 2, "Title": "Buy bread", "Done": true}
 //        ]}
 func (this *MessageController) ListMessages() {
+	log.Debug("ListMessages")
 	res := struct{ Messages []*models.Message }{models.DefaultMessageList.All()}
 	this.Data["json"] = res
 	this.ServeJSON()
@@ -33,9 +34,10 @@ func (this *MessageController) ListMessages() {
 //   req: POST /message/ {"Title": "Buy bread from us now!"}
 //   res: 200
 func (this *MessageController) NewMessage() {
+	log.Debug("NewMessage")
 	req := struct{ Title string }{}
 	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &req); err != nil {
-		this.outputError(400, "empty title")
+		this.outputError(400, "empty")
 		return
 	}
 	t, err := models.NewMessage(req.Title)
@@ -43,11 +45,13 @@ func (this *MessageController) NewMessage() {
 		this.outputError(400, err.Error())
 		return
 	}
+	log.Debug("NewMessage send")
 	err = models.DefaultMessageList.Send(t)
 	if err != nil {
 		this.outputError(400, err.Error())
 		return
 	}
+	log.Debug("NewMessage save")
 	models.DefaultMessageList.Save(t)
 }
 
@@ -65,11 +69,11 @@ func (this *MessageController) outputError(status int, msg string) {
 //   res: 404 message not found
 func (this *MessageController) GetMessage() {
 	id := this.Ctx.Input.Param(":id")
-	beego.Info("Message is ", id)
+	log.WithField("id", id).Debug("GetMessage")
 	intid, _ := strconv.ParseInt(id, 10, 64)
-	t, ok := models.DefaultMessageList.Find(intid)
-	beego.Info("Found", ok)
-	if !ok {
+	t, found := models.DefaultMessageList.Find(intid)
+	log.WithField("id", id).WithField("found", found).Debug("GetMessage")
+	if !found {
 		this.Ctx.Output.SetStatus(404)
 		this.Ctx.Output.Body([]byte("message not found"))
 		return
@@ -87,7 +91,7 @@ func (this *MessageController) GetMessage() {
 //   res: 400 inconsistent message IDs
 func (this *MessageController) UpdateMessage() {
 	id := this.Ctx.Input.Param(":id")
-	beego.Info("Message is ", id)
+	log.WithField("id", id).Debug("UpdateMessage")
 	intid, _ := strconv.ParseInt(id, 10, 64)
 	var t models.Message
 	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &t); err != nil {

@@ -5,7 +5,7 @@ import (
 )
 
 func newMessageOrFatal(t *testing.T, title string) *Message {
-	message, err := NewMessage("learn Go")
+	message, err := NewMessage(title)
 	if err != nil {
 		t.Fatalf("new message: %v", err)
 	}
@@ -26,7 +26,7 @@ func TestNewMessage(t *testing.T) {
 func TestNewMessageEmptyTitle(t *testing.T) {
 	_, err := NewMessage("")
 	if err == nil {
-		t.Errorf("expected 'empty title' error, got nil")
+		t.Errorf("expected 'empty' error, got nil")
 	}
 }
 
@@ -72,7 +72,7 @@ func TestSaveModifyAndRetrieve(t *testing.T) {
 
 	message.Done = true
 	if m.All()[0].Done {
-		t.Errorf("saved message wasn't done")
+		t.Errorf("message wasn't saved")
 	}
 }
 
