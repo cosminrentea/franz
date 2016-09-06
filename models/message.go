@@ -40,7 +40,9 @@ type MessageManager struct {
 
 // NewMessageManager returns an empty MessageManager.
 func NewMessageManager(kafkaConfig KafkaConfig) *MessageManager {
-	return &MessageManager{}
+	return &MessageManager{
+		KafkaConfig: kafkaConfig,
+	}
 }
 
 // Save saves the given Message in the MessageManager.
