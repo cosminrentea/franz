@@ -1,0 +1,33 @@
+{
+  "name": "franz",
+  "version": "1.0.0",
+  "description": "A small web-application that sends messages to a Kafka topic.",
+  "main": "app/franz.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cosminrentea/franz.git"
+  },
+  "keywords": [
+    "web",
+    "golang",
+    "bee",
+    "kafka",
+    "producer"
+  ],
+  "author": "Cosmin Rentea",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cosminrentea/franz/issues"
+  },
+  "homepage": "https://github.com/cosminrentea/franz#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-messages": "^1.5.8"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

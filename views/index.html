@@ -2,19 +2,21 @@
 <html ng-app="franz">
     <head>
         <title>Franz</title>
-        <script src="/static/js/angular.min.js"></script>
-        <script src="/static/js/angular-messages.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="http://fonts.googleapis.com/css?family=Roboto:400,300" rel="stylesheet" type="text/css">
-        <script src="/static/js/franz.js"></script>
+        <script src="/static/js/bundle.js"></script>
         <link href="/static/css/franz.css" rel="stylesheet">
     </head>
     <body>
         <h2>Write your message and <span>&nbsp;Franz&nbsp;</span> will send it</h2>
         <div class="container" ng-controller="FranzCtrl">
             <form name="messageform" ng-submit="sendMessage()">
-                <textarea name="message" id="message" class="rounded-box" autofocus cols="80" rows="5" ng-model="messageText" ng-required="true" ng-minlength="{{ minimumLength }}" ng-maxlength="{{ maximumLength }}"></textarea>
-                <button type="submit" class="lightgrey rounded-box" ng-disabled="working || messageform.$invalid">Send</button>
+                <textarea name="message" id="message" class="rounded-box" autofocus cols="80" rows="5"
+                          ng-model="messageText" ng-required="true" ng-minlength="{{ minimumLength }}" ng-maxlength="{{ maximumLength }}">
+                </textarea>
+                <button type="submit" class="lightgrey rounded-box" ng-disabled="working || messageform.$invalid">
+                    Send
+                </button>
                 <div role="alert" ng-messages="messageform.message.$error">
                     <!--
                     <div class="validation-error" ng-message="required">You did not enter a message</div>

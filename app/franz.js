@@ -4,12 +4,10 @@
  license that can be found in the LICENSE file.
  */
 
-(function (angular) {
-    'use strict';
-    angular.module('franz', ['ngMessages']);
-})(window.angular);
+var angular = require('angular');
 
-function FranzCtrl($scope, $http) {
+angular.module('franz', [require('angular-messages')])
+    .controller('FranzCtrl', function ($scope, $http) {
     $scope.messages = [];
     $scope.working = false;
     $scope.errorSending = false;
@@ -53,7 +51,7 @@ function FranzCtrl($scope, $http) {
             ID: message.ID,
             Content: message.Content,
             Done: !message.Done
-        }
+        };
         $http.put('/message/' + message.ID, data)
             .error(handleError)
             .success(function () {
@@ -64,4 +62,4 @@ function FranzCtrl($scope, $http) {
     refresh().then(function () {
         $scope.working = false;
     });
-}
+});
