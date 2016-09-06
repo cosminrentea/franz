@@ -75,12 +75,8 @@ func (m *MessageManager) Find(ID int64) (*Message, bool) {
 	return nil, false
 }
 
+// Send a message to a Kafka queue. Can return an error.
 func (m *MessageManager) Send(message *Message) error {
-	kafkaMessage := &sarama.ProducerMessage{
-		Topic: beego.AppConfig.String("KafkaTopic"),
-		Key:   nil,
-		Value: sarama.StringEncoder(message.Title),
-	}
 	kafkaProducer, err := sarama.NewSyncProducer(beego.AppConfig.Strings("KafkaBrokers"), nil)
 	if err != nil {
 		beego.Error("error when creating Kafka SyncProducer", err)
@@ -91,6 +87,11 @@ func (m *MessageManager) Send(message *Message) error {
 			beego.Error("error when closing Kafka SyncProducer", errClose)
 		}
 	}()
+	kafkaMessage := &sarama.ProducerMessage{
+		Topic: beego.AppConfig.String("KafkaTopic"),
+		Key:   nil,
+		Value: sarama.StringEncoder(message.Title),
+	}
 	_, _, errSend := kafkaProducer.SendMessage(kafkaMessage)
 	return errSend
 }
