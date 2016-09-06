@@ -38,7 +38,6 @@ func (this *MessageController) ListMessages() {
 //   req: POST /message/ {"Title": "Buy bread from us now!"}
 //   res: 200
 func (this *MessageController) NewMessage() {
-	log.Debug("NewMessage")
 	req := struct{ Title string }{}
 	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &req); err != nil {
 		this.output(400, "empty")
@@ -49,13 +48,11 @@ func (this *MessageController) NewMessage() {
 		this.output(400, err.Error())
 		return
 	}
-	log.Debug("NewMessage send")
 	err = models.DefaultMessageList.Send(t)
 	if err != nil {
 		this.output(400, err.Error())
 		return
 	}
-	log.Debug("NewMessage save")
 	models.DefaultMessageList.Save(t)
 }
 
