@@ -15,8 +15,8 @@ func newMessageOrFatal(t *testing.T, title string) *Message {
 func TestNewMessage(t *testing.T) {
 	title := "learn Go"
 	message := newMessageOrFatal(t, title)
-	if message.Title != title {
-		t.Errorf("expected title %q, got %q", title, message.Title)
+	if message.Content != title {
+		t.Errorf("expected title %q, got %q", title, message.Content)
 	}
 	if message.Done {
 		t.Errorf("new message is done")

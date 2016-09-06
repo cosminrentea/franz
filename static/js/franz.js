@@ -14,6 +14,7 @@ function FranzCtrl($scope, $http) {
     $scope.working = false;
     $scope.errorSending = false;
     $scope.maximumLength = 400;
+    $scope.minimumLength = 5;
 
     var handleError = function (data, status) {
         console.log('code ' + status + ': ' + data);
@@ -48,7 +49,11 @@ function FranzCtrl($scope, $http) {
     };
 
     $scope.toggleDone = function (message) {
-        data = {ID: message.ID, Title: message.Title, Done: !message.Done}
+        var data = {
+            ID: message.ID,
+            Content: message.Content,
+            Done: !message.Done
+        }
         $http.put('/message/' + message.ID, data)
             .error(handleError)
             .success(function () {

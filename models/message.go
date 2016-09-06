@@ -13,9 +13,9 @@ var (
 )
 
 type Message struct {
-	ID    int64  // Unique identifier
-	Title string // Description
-	Done  bool   // Is this Message done?
+	ID      int64  // Unique identifier
+	Content string // Content
+	Done    bool   // Is this Message done?
 }
 
 // NewMessage creates a new message given a title, that can't be empty.
@@ -100,7 +100,7 @@ func (mm *MessageManager) Send(msg *Message) error {
 	kafkaMessage := &sarama.ProducerMessage{
 		Topic: mm.topic,
 		Key:   nil,
-		Value: sarama.StringEncoder(msg.Title),
+		Value: sarama.StringEncoder(msg.Content),
 	}
 	_, _, errSend := kafkaProducer.SendMessage(kafkaMessage)
 	return errSend
