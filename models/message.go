@@ -102,7 +102,7 @@ func (mm *MessageManager) Send(msg *Message) error {
 		Key:   nil,
 		Value: sarama.StringEncoder(msg.Content),
 	}
-	log.Debug("sending message to kafka queue")
+	log.Info("sending message to kafka queue")
 	_, _, errSend := kafkaProducer.SendMessage(kafkaMessage)
 	return errSend
 }

@@ -4,6 +4,11 @@ import (
 	"testing"
 )
 
+var emptyKafkaConfig = KafkaConfig{
+	brokers: []string{""},
+	topic:   "",
+}
+
 func newMessageOrFatal(t *testing.T, title string) *Message {
 	message, err := NewMessage(title)
 	if err != nil {
@@ -33,7 +38,7 @@ func TestNewMessageEmptyTitle(t *testing.T) {
 func TestSaveMessageAndRetrieve(t *testing.T) {
 	message := newMessageOrFatal(t, "learn Go")
 
-	m := NewMessageManager()
+	m := NewMessageManager(emptyKafkaConfig)
 	m.Save(message)
 
 	all := m.All()
@@ -49,7 +54,7 @@ func TestSaveAndRetrieveTwoMessages(t *testing.T) {
 	learnGo := newMessageOrFatal(t, "learn Go")
 	learnTDD := newMessageOrFatal(t, "learn TDD")
 
-	m := NewMessageManager()
+	m := NewMessageManager(emptyKafkaConfig)
 	m.Save(learnGo)
 	m.Save(learnTDD)
 
@@ -67,7 +72,7 @@ func TestSaveAndRetrieveTwoMessages(t *testing.T) {
 
 func TestSaveModifyAndRetrieve(t *testing.T) {
 	message := newMessageOrFatal(t, "learn Go")
-	m := NewMessageManager()
+	m := NewMessageManager(emptyKafkaConfig)
 	m.Save(message)
 
 	message.Done = true
@@ -78,7 +83,7 @@ func TestSaveModifyAndRetrieve(t *testing.T) {
 
 func TestSaveTwiceAndRetrieve(t *testing.T) {
 	message := newMessageOrFatal(t, "learn Go")
-	m := NewMessageManager()
+	m := NewMessageManager(emptyKafkaConfig)
 	m.Save(message)
 	m.Save(message)
 
@@ -93,7 +98,7 @@ func TestSaveTwiceAndRetrieve(t *testing.T) {
 
 func TestSaveAndFind(t *testing.T) {
 	message := newMessageOrFatal(t, "learn Go")
-	m := NewMessageManager()
+	m := NewMessageManager(emptyKafkaConfig)
 	m.Save(message)
 
 	nt, ok := m.Find(message.ID)
