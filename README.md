@@ -4,7 +4,17 @@ Install (after installing golang):
 - go get github.com/astaxie/beego
 - go get github.com/beego/bee
 
-Start with:
+Regenerate frontend:
+- for development:
+```
+gulp
+```
+- for production:
+```
+gulp --env=prod 
+```
+
+Start server with:
 ```
 bee run
 ```
