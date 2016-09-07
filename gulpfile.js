@@ -27,11 +27,7 @@ var isDev = !isProd;
 
 // The JS task.
 gulp.task('js', function () {
-    var b = browserify({
-        entries: paths.js,
-        debug: true
-    });
-    return b.bundle()
+    return browserify({entries: paths.js, debug: true}).bundle()
         .pipe(source('bundle.js'))
         .pipe(jshint())
         .pipe(jshint.reporter('default'), {verbose: true})
