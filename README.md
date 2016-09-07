@@ -3,6 +3,7 @@
 Install (after installing golang):
 - go get github.com/astaxie/beego
 - go get github.com/beego/bee
+- gulp
 
 Regenerate frontend:
 - for development:
