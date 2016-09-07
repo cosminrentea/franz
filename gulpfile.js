@@ -8,7 +8,7 @@ var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var gutil = require('gulp-util');
 var gulpif = require('gulp-if');
-var jshint= require('gulp-jshint');
+var jshint = require('gulp-jshint');
 
 // Define paths.
 var paths = {
@@ -34,11 +34,11 @@ gulp.task('js', function () {
     return b.bundle()
         .pipe(source('bundle.js'))
         .pipe(jshint())
-        .pipe(jshint.reporter('default'), { verbose: true })
+        .pipe(jshint.reporter('default'), {verbose: true})
         .pipe(jshint.reporter('fail'))
         .pipe(gulpif(isDev, gulp.dest(paths.dest)))
         .pipe(buffer())
-        .pipe(gulpif(isProd, uglify()))
+        .pipe(gulpif(isProd, uglify({mangle: false})))
         .pipe(gulpif(isProd, gulp.dest(paths.dest)));
 });
 
